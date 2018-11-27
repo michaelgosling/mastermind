@@ -19,34 +19,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/color1" />
+            android:background="@color/color1"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/userColorBtn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/color2" />
+            android:background="@color/color2"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/userColorBtn3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/color3" />
+            android:background="@color/color3"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/userColorBtn4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/color4" />
+            android:background="@color/color4"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/guessSubmitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="GUESS" />
+            android:text="@string/guessBtn"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

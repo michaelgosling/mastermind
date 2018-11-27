@@ -1,31 +1,40 @@
 package com.example.mgosling94.mastermind;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import java.util.HashMap;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private HashMap<String, Integer> colorIdMap = new HashMap<String, Integer>();
+
+    private int[] colorIds = {R.color.color1, R.color.color2, R.color.color3, R.color.color4,
+            R.color.color5, R.color.color6};
+    private Button[] userBtns = {findViewById(R.id.userColorBtn1), findViewById(R.id.userColorBtn2),
+            findViewById(R.id.userColorBtn3), findViewById(R.id.userColorBtn4)};
+    private Button userSubmitBtn = findViewById(R.id.guessSubmitBtn);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    /**
-     * Fills given hashmap with possible colors IDs
-     *
-     * @param hashMap HashMap to fill
-     */
-    protected void fillMapWithColors(HashMap<String, Integer> hashMap) {
-        hashMap.put("Color1", R.color.color1);
-        hashMap.put("Color2", R.color.color2);
-        hashMap.put("Color3", R.color.color3);
-        hashMap.put("Color4", R.color.color4);
-        hashMap.put("Color5", R.color.color5);
-        hashMap.put("Color6", R.color.color6);
+        for (Button btn : userBtns) {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ColorDrawable viewBG = (ColorDrawable) v.getBackground();
+                    int bgColor = viewBG.getColor();
+                    int bgColorIdx = 0;
+                    for (int i = 0; i < colorIds.length; i++)
+                        bgColorIdx = (colorIds[i] == bgColor) ? i : bgColorIdx;
+                    bgColorIdx++;
+                    bgColorIdx = (bgColorIdx > colorIds.length - 1) ? 0 : bgColorIdx;
+                    ColorDrawable newBG = new ColorDrawable(colorIds[bgColorIdx]);
+                    v.setBackground(newBG);
+                }
+            });
+        }
     }
 
     /**
