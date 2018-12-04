@@ -3,6 +3,7 @@
     <color name="colorPrimary">#232323</color>
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#000000</color>
+    <!-- Code Peg Colors -->
     <color name="color1">#05344e</color>
     <color name="color2">#105862</color>
     <color name="color3">#74827b</color>
