@@ -1,9 +1,11 @@
 package com.example.mgosling94.mastermind;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,11 +16,17 @@ public class MainActivity extends AppCompatActivity {
     private Button[] userBtns = new Button[4];
     private Button userSubmitBtn;
     private Board board;
+    private ListView lv;
+    private Context context;
+    private CustomListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+        lv = findViewById(R.id.guessList);
+
 
         // Set colors
         colors[0] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color1));
@@ -62,24 +70,43 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        adapter = new CustomListAdapter(this, getHistoryAsArray(), colors);
+    }
+
+    /**
+     * Returns the history from the board as a 2D array
+     *
+     * @return 2D Array of pegs
+     */
+    private Peg[][] getHistoryAsArray() {
+        Peg[][] history = new Peg[board.GetHistory().size()][8];
+        for (int i = 0; i < board.GetHistory().size(); i++) {
+            for (int j = 0; j < board.GetHistory().get(i).length; j++)
+                history[i][j] = board.GetHistory().get(i)[j];
+        }
+        return history;
     }
 
     /**
      * Update the graphical representation of the board
      */
     protected void updateBoard() {
-        for (Peg[] row : board.GetHistory()) {
-            for (Peg peg : row) {
 
-            }
-        }
     }
 
     /**
      * Take the current colors of the user input UI and pass it to business class
      */
     protected void submitGuess() {
+        // test code
+        Peg[] codePegs = new Peg[4];
+        Peg[] keyPegs = new Peg[4];
+        for (int i = 0; i < 4; i++)
+            codePegs[i] = new Peg(Peg.PegColor.Color1, false);
 
+        for (int i = 0; i < 4; i++)
+            keyPegs[i] = new Peg(Peg.PegColor.White, true);
+
+        board.AddGuess(codePegs, keyPegs);
     }
-
 }

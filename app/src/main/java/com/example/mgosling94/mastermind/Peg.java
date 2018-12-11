@@ -2,7 +2,7 @@ package com.example.mgosling94.mastermind;
 
 public class Peg {
 
-    enum PegColor {
+    public enum PegColor {
         White, Black, Color1, Color2, Color3, Color4, Color5, Color6
     }
 
