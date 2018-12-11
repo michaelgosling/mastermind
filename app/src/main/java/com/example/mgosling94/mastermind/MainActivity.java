@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private ColorStateList[] colors = new ColorStateList[6];
     private Button[] userBtns = new Button[4];
     private Button userSubmitBtn;
+    private Board board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         userBtns[3] = findViewById(R.id.userColorBtn4);
         userSubmitBtn = findViewById(R.id.guessSubmitBtn);
 
-        for (Button btn : userBtns) btn.setBackgroundTintList(colors[0]);
+        // set each button to a color from the list
+        for (int i = 0; i < userBtns.length; i++)
+            userBtns[i].setBackgroundTintList(colors[i]);
 
         // for each button, assign this listener
         for (Button btn : userBtns) {
@@ -48,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
                  */
                 @Override
                 public void onClick(View v) {
+                    // get the current background color and look up it's index in colors
                     int bgColorIdx = 0;
                     for (int i = 0; i < colors.length; i++)
                         bgColorIdx = (colors[i].getDefaultColor() == v.getBackgroundTintList().getDefaultColor()) ? i : bgColorIdx;
+                    // increment the index by 1 and assign the new color corresponding to the new index
                     bgColorIdx++;
                     bgColorIdx = (bgColorIdx > colors.length - 1) ? 0 : bgColorIdx;
                     v.setBackgroundTintList(colors[bgColorIdx]);
@@ -63,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
      * Update the graphical representation of the board
      */
     protected void updateBoard() {
+        for (Peg[] row : board.GetHistory()) {
+            for (Peg peg : row) {
 
+            }
+        }
     }
 
     /**
