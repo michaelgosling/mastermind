@@ -4,10 +4,10 @@
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#000000</color>
     <!-- Code Peg Colors -->
-    <color name="color1">#05344e</color>
-    <color name="color2">#105862</color>
-    <color name="color3">#74827b</color>
+    <color name="color1">#4a148c</color>
+    <color name="color2">#80d8ff</color>
+    <color name="color3">#ef6c00</color>
     <color name="color4">#e5d357</color>
-    <color name="color5">#EFDAA3</color>
-    <color name="color6">#0C3319</color>
+    <color name="color5">#b71c1c</color>
+    <color name="color6">#388e3c</color>
 </resources>
