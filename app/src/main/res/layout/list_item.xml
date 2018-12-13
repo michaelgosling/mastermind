@@ -4,11 +4,12 @@
     android:id="@+id/listItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/mtrl_card_spacing"
-    android:layout_marginTop="@dimen/mtrl_card_spacing"
-    android:layout_marginRight="@dimen/mtrl_card_spacing"
+    android:layout_margin="20dp"
     android:orientation="horizontal"
-    android:theme="@style/Widget.MaterialComponents.CardView">
+    android:paddingBottom="50dp"
+    android:theme="@style/Widget.MaterialComponents.CardView"
+    app:cardElevation="10dp"
+    app:contentPadding="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,8 +17,8 @@
 
         <ImageView
             android:id="@+id/cardPeg1"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:src="@drawable/peg"
@@ -28,8 +29,8 @@
 
         <ImageView
             android:id="@+id/cardPeg2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:src="@drawable/peg"
@@ -40,8 +41,8 @@
 
         <ImageView
             android:id="@+id/cardPeg3"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:src="@drawable/peg"
@@ -52,8 +53,8 @@
 
         <ImageView
             android:id="@+id/cardPeg4"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:src="@drawable/peg"

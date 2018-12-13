@@ -2,23 +2,28 @@ package com.example.mgosling94.mastermind;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ColorStateList[] colors = new ColorStateList[6];
+    private ColorStateList[] colors = new ColorStateList[8];
     private Button[] userBtns = new Button[4];
     private Button userSubmitBtn;
     private Board board;
     private ListView lv;
     private Context context;
     private CustomListAdapter adapter;
+    private List<Peg[]> boardHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
         lv = findViewById(R.id.guessList);
-
+        board = new Board();
+        boardHistory = new ArrayList<>();
 
         // Set colors
         colors[0] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color1));
@@ -35,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         colors[3] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color4));
         colors[4] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color5));
         colors[5] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color6));
+        colors[6] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.whitepeg));
+        colors[7] = ColorStateList.valueOf(Color.BLACK);
 
         // find user buttons
         userBtns[0] = findViewById(R.id.userColorBtn1);
@@ -70,28 +78,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        adapter = new CustomListAdapter(this, getHistoryAsArray(), colors);
+
+        userSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitGuess();
+            }
+        });
+        boardHistory = board.GetHistory();
+        adapter = new CustomListAdapter(this, boardHistory, colors);
+        lv.setAdapter(adapter);
     }
 
-    /**
-     * Returns the history from the board as a 2D array
-     *
-     * @return 2D Array of pegs
-     */
-    private Peg[][] getHistoryAsArray() {
-        Peg[][] history = new Peg[board.GetHistory().size()][8];
-        for (int i = 0; i < board.GetHistory().size(); i++) {
-            for (int j = 0; j < board.GetHistory().get(i).length; j++)
-                history[i][j] = board.GetHistory().get(i)[j];
-        }
-        return history;
-    }
 
     /**
      * Update the graphical representation of the board
      */
     protected void updateBoard() {
-
+        boardHistory = board.GetHistory();
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -108,5 +113,6 @@ public class MainActivity extends AppCompatActivity {
             keyPegs[i] = new Peg(Peg.PegColor.White, true);
 
         board.AddGuess(codePegs, keyPegs);
+        updateBoard();
     }
 }
