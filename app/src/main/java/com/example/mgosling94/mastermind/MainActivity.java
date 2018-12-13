@@ -103,16 +103,40 @@ public class MainActivity extends AppCompatActivity {
      * Take the current colors of the user input UI and pass it to business class
      */
     protected void submitGuess() {
-        // test code
         Peg[] codePegs = new Peg[4];
         Peg[] keyPegs = new Peg[4];
         for (int i = 0; i < 4; i++)
-            codePegs[i] = new Peg(Peg.PegColor.Color1, false);
+            codePegs[i] = new Peg(tintToPegColor(userBtns[i].getBackgroundTintList()), false);
 
-        for (int i = 0; i < 4; i++)
-            keyPegs[i] = new Peg(Peg.PegColor.White, true);
 
-        board.AddGuess(codePegs, keyPegs);
         updateBoard();
+    }
+
+    /**
+     * Get a peg color from a color state list
+     *
+     * @param color ColorStateList
+     * @return PegColor
+     */
+    protected Peg.PegColor tintToPegColor(ColorStateList color) {
+        Peg.PegColor colorToReturn = Peg.PegColor.White;
+        if (color == colors[0])
+            colorToReturn = Peg.PegColor.Color1;
+        else if (color == colors[1])
+            colorToReturn = Peg.PegColor.Color2;
+        else if (color == colors[2])
+            colorToReturn = Peg.PegColor.Color3;
+        else if (color == colors[3])
+            colorToReturn = Peg.PegColor.Color4;
+        else if (color == colors[4])
+            colorToReturn = Peg.PegColor.Color5;
+        else if (color == colors[5])
+            colorToReturn = Peg.PegColor.Color6;
+        else if (color == colors[6])
+            colorToReturn = Peg.PegColor.White;
+        else if (color == colors[7])
+            colorToReturn = Peg.PegColor.Black;
+
+        return colorToReturn;
     }
 }
