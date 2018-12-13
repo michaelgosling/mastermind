@@ -6,44 +6,92 @@ import java.util.Random;
 
 public class AI {
     // pegs are from 2-7
-    private List<Peg[]> correctCombination;
+    private Peg[] correctCombination = new Peg[4];
     private Random rng = new Random();
 
-    public List<Peg[]> createPegCombination()
-    {
-        List<Peg[]> newCombo = new ArrayList<>();
-        for (int i = 0; i < 6; i++)
-        {
-            newCombo.add(new Peg[rng.nextInt(7-2+1)+2]);
+    private Peg.PegColor getPegColor(int idx) {
+        Peg.PegColor pegColor;
+        switch (idx) {
+            default:
+                pegColor = Peg.PegColor.Color1;
+                break;
+            case 1:
+                pegColor = Peg.PegColor.Color2;
+                break;
+            case 2:
+                pegColor = Peg.PegColor.Color3;
+                break;
+            case 3:
+                pegColor = Peg.PegColor.Color4;
+                break;
+            case 4:
+                pegColor = Peg.PegColor.Color5;
+                break;
+            case 5:
+                pegColor = Peg.PegColor.Color6;
+                break;
         }
-        setCorrectCombination(newCombo);
+        return pegColor;
+    }
+
+    public List<Peg> createPegCombination()
+    {
+        List<Peg> newCombo = new ArrayList<>();
+        for (int i = 0; i < 4; i++)
+        {
+            int colorIdx = rng.nextInt(6);
+            newCombo.add(new Peg(getPegColor(colorIdx), false));
+        }
+
+        Peg[] newComboArray = new Peg[4];
+        int i = 0;
+        for (Peg peg : newCombo) {
+            newComboArray[i] = peg;
+            i++;
+        }
+        setCorrectCombination(newComboArray);
         return newCombo;
     }
 
-    public List<Peg[]> getCorrectCombination() {
+    public Peg[] getCorrectCombination() {
         return correctCombination;
     }
 
-    private void setCorrectCombination(List<Peg[]> correctCombination) {
+    private void setCorrectCombination(Peg[] correctCombination) {
         this.correctCombination = correctCombination;
     }
-    public List<Peg[]> checkCombination(List<Peg[]> toCheck)
+
+    public List<Peg> checkCombination(Peg[] toCheck)
     {
-        List<Peg[]> correctPegs = new ArrayList<>();
-        for (int i = 0; i <= toCheck.size(); i++)
-        {
-            for (int j = 0; i <= toCheck.size(); i++)
-            {
-                if (i != j && toCheck.get(i) == correctCombination.get(j))
-                {
-                    correctPegs.add(new Peg[0]);
-                }
-                else if ( i == j && toCheck.get(i) == correctCombination.get(j))
-                {
-                    correctPegs.add(new Peg[1]);
+        List<int[]> correctPegs = new ArrayList<>();
+
+        for (int i = 0; i < toCheck.length; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (toCheck[i].getColor() == correctCombination[j].getColor()) {
+                    int[] rightGuess;
+                    if (i == j)
+                        rightGuess = new int[]{i, 1};
+                    else
+                        rightGuess = new int[]{i, 0};
+                    correctPegs.add(rightGuess);
+                    break;
                 }
             }
         }
-        return correctPegs;
+
+        List<Peg> pegsToReturn = new ArrayList<>();
+
+        for (int[] i : correctPegs) {
+            if (i[1] == 0)
+                pegsToReturn.add(new Peg(Peg.PegColor.White, true));
+            else
+                pegsToReturn.add(new Peg(Peg.PegColor.Black, true));
+        }
+
+        while (pegsToReturn.size() < 4) {
+            pegsToReturn.add(new Peg(Peg.PegColor.KeyWrong, true));
+        }
+
+        return pegsToReturn;
     }
 }

@@ -3,7 +3,7 @@ package com.example.mgosling94.mastermind;
 public class Peg {
 
     public enum PegColor {
-        White, Black, Color1, Color2, Color3, Color4, Color5, Color6
+        White, Black, Color1, Color2, Color3, Color4, Color5, Color6, KeyWrong
     }
 
     /* Properties */
@@ -13,6 +13,10 @@ public class Peg {
     /* Accessors & Mutators */
     public PegColor getColor() {
         return color;
+    }
+
+    public boolean getIsKey() {
+        return isKey;
     }
 
     /* Constructor */

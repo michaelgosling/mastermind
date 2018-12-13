@@ -2,6 +2,7 @@ package com.example.mgosling94.mastermind;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +17,20 @@ import static com.example.mgosling94.mastermind.R.layout;
 
 public class CustomListAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
-    private List<Peg[]> guessArray;
+    private List<Peg[]> guessList;
     private ColorStateList[] colors;
     private Context context;
 
-    public CustomListAdapter(MainActivity mainActivity, List<Peg[]> guessArray, ColorStateList[] colors) {
+    public CustomListAdapter(MainActivity mainActivity, List<Peg[]> guessList, ColorStateList[] colors) {
         this.colors = colors;
-        this.guessArray = guessArray;
+        this.guessList = guessList;
         this.context = mainActivity;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return guessArray.size();
+        return guessList.size();
     }
 
     @Override
@@ -55,14 +56,14 @@ public class CustomListAdapter extends BaseAdapter {
         holder.cardKeyPeg2 = rowView.findViewById(id.cardKeyPeg2);
         holder.cardKeyPeg3 = rowView.findViewById(id.cardKeyPeg3);
         holder.cardKeyPeg4 = rowView.findViewById(id.cardKeyPeg4);
-        holder.cardPeg1.setImageTintList(getPegTint(guessArray.get(position)[0].getColor()));
-        holder.cardPeg2.setImageTintList(getPegTint(guessArray.get(position)[1].getColor()));
-        holder.cardPeg3.setImageTintList(getPegTint(guessArray.get(position)[2].getColor()));
-        holder.cardPeg4.setImageTintList(getPegTint(guessArray.get(position)[3].getColor()));
-        holder.cardKeyPeg1.setImageTintList(getPegTint(guessArray.get(position)[4].getColor()));
-        holder.cardKeyPeg2.setImageTintList(getPegTint(guessArray.get(position)[5].getColor()));
-        holder.cardKeyPeg3.setImageTintList(getPegTint(guessArray.get(position)[6].getColor()));
-        holder.cardKeyPeg4.setImageTintList(getPegTint(guessArray.get(position)[7].getColor()));
+        holder.cardPeg1.setImageTintList(getPegTint(guessList.get(position)[0].getColor()));
+        holder.cardPeg2.setImageTintList(getPegTint(guessList.get(position)[1].getColor()));
+        holder.cardPeg3.setImageTintList(getPegTint(guessList.get(position)[2].getColor()));
+        holder.cardPeg4.setImageTintList(getPegTint(guessList.get(position)[3].getColor()));
+        holder.cardKeyPeg1.setImageTintList(getPegTint(guessList.get(position)[4].getColor()));
+        holder.cardKeyPeg2.setImageTintList(getPegTint(guessList.get(position)[5].getColor()));
+        holder.cardKeyPeg3.setImageTintList(getPegTint(guessList.get(position)[6].getColor()));
+        holder.cardKeyPeg4.setImageTintList(getPegTint(guessList.get(position)[7].getColor()));
         return rowView;
     }
 
@@ -92,6 +93,9 @@ public class CustomListAdapter extends BaseAdapter {
                 break;
             case Color6:
                 color = colors[5];
+                break;
+            default:
+                color = ColorStateList.valueOf(Color.WHITE);
                 break;
         }
         return color;

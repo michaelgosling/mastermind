@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private CustomListAdapter adapter;
     private List<Peg[]> boardHistory;
+    private AI ai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         lv = findViewById(R.id.guessList);
         board = new Board();
         boardHistory = new ArrayList<>();
+        ai = new AI();
+        ai.createPegCombination();
 
         // Set colors
         colors[0] = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color1));
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         bgColorIdx = (colors[i].getDefaultColor() == v.getBackgroundTintList().getDefaultColor()) ? i : bgColorIdx;
                     // increment the index by 1 and assign the new color corresponding to the new index
                     bgColorIdx++;
-                    bgColorIdx = (bgColorIdx > colors.length - 1) ? 0 : bgColorIdx;
+                    bgColorIdx = (bgColorIdx > colors.length - 3) ? 0 : bgColorIdx;
                     v.setBackgroundTintList(colors[bgColorIdx]);
                 }
             });
@@ -108,8 +112,47 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++)
             codePegs[i] = new Peg(tintToPegColor(userBtns[i].getBackgroundTintList()), false);
 
+        int i = 0;
+        for (Peg peg : ai.checkCombination(codePegs)) {
+            keyPegs[i] = peg;
+            i++;
+        }
 
+        board.AddGuess(codePegs, keyPegs);
         updateBoard();
+        if (CheckForWin()) {
+            // TODO: win code
+            Toast.makeText(this, "You win!", Toast.LENGTH_LONG).show();
+        }
+
+        if (boardHistory.size() >= 12) {
+            EndGame();
+        }
+
+    }
+
+    /**
+     * Go to final game activity
+     */
+    protected void EndGame() {
+
+        // TODO: Game End Code
+        Toast.makeText(this, "You Lose!", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Checks if the latest guess was correct
+     *
+     * @return true or false
+     */
+    protected boolean CheckForWin() {
+        Peg[] lastGuess = board.GetHistory().get(board.GetHistory().size() - 1);
+        boolean didWin = true;
+        for (int i = 0; i < ai.getCorrectCombination().length; i++)
+            if (!(lastGuess[i].getColor() == ai.getCorrectCombination()[i].getColor()))
+                didWin = false;
+
+        return didWin;
     }
 
     /**
